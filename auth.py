@@ -151,7 +151,13 @@ AUTH_CSS = """
 
 
 def show_login_page():
+    # If user already set in session (mid-rerun), bail immediately
+    if st.session_state.get("user") and st.session_state.get("page") == "app":
+        return
+
+    # Seed demo data (fast no-op if already done)
     seed_demo_data()
+
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
     # ── Two-column layout: left = branding, right = form ──
@@ -317,18 +323,24 @@ def show_login_page():
 
 
 def _do_demo_login(email: str, mode: str):
-    """Helper: log in as demo user and route to app."""
-    result = login_user(email, "demo1234")
-    if result["ok"]:
-        st.session_state.user = result["user"]
-        hh = get_user_household(result["user"]["id"])
-        if hh:
-            st.session_state.household = hh
-        st.session_state.mode = mode
-        st.session_state.page = "app"
-        st.session_state.nav = "🏠 Household Dashboard" if mode == "household" else "🧍 Individual Dashboard"
-        st.session_state.show_demo_popup = None
-        st.rerun()
+    """Helper: log in as demo user and route to app. Sets all state atomically."""
+    with st.spinner("Loading demo..."):
+        result = login_user(email, "demo1234")
+        if result["ok"]:
+            hh = get_user_household(result["user"]["id"])
+            # Set ALL session state at once before rerun to avoid partial renders
+            st.session_state.update({
+                "user": result["user"],
+                "household": hh,
+                "mode": mode,
+                "page": "app",
+                "nav": "🏠 Household Dashboard" if mode == "household" else "🧍 Individual Dashboard",
+                "show_demo_popup": None,
+            })
+        else:
+            st.error("Demo login failed. Please refresh and try again.")
+            return
+    st.rerun()
 
 
 def show_onboarding_page():
