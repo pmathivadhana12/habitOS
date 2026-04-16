@@ -481,6 +481,28 @@ def main():
         check_onboard_or_app()
         return
 
+    # ── Loading screen — shown briefly between demo click and app render ──
+    if page == "loading":
+        st.markdown("""
+        <div style="position:fixed;top:0;left:0;right:0;bottom:0;
+                    background:#080b12;z-index:9999;
+                    display:flex;flex-direction:column;
+                    align-items:center;justify-content:center;">
+            <div style="font-family:Syne,sans-serif;font-weight:800;
+                        font-size:36px;color:#e8f0f8;margin-bottom:8px;">
+                ⬡ HabitOS
+            </div>
+            <div style="font-family:Space Mono,monospace;font-size:11px;
+                        letter-spacing:3px;text-transform:uppercase;color:#445566;">
+                Loading dashboard...
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        # Immediately switch to app on next rerun
+        st.session_state.page = "app"
+        st.rerun()
+        return
+
     # ── Guard: must have a user in session ──
     user = st.session_state.get("user")
     if not user:
