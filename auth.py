@@ -160,6 +160,67 @@ def show_login_page():
 
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
+    # ── DEMO POPUP — rendered at very top before columns ──────────────────────
+    popup = st.session_state.get("show_demo_popup")
+    if popup:
+        st.markdown("""
+        <script>
+            window.parent.document.querySelector('.main').scrollTo({top:0,behavior:'smooth'});
+        </script>
+        """, unsafe_allow_html=True)
+
+        _, pcol, _ = st.columns([0.3, 1.4, 0.3])
+        with pcol:
+            st.markdown("""
+            <div style="background:#0d1117;border:1px solid #1e2d40;border-radius:16px;
+                        padding:24px 28px;margin-bottom:20px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;
+                            background:linear-gradient(90deg,#00d4ff,#7b2fff);"></div>
+                <div style="font-family:Syne,sans-serif;font-weight:800;font-size:18px;
+                            color:#e8f0f8;margin-bottom:4px;">Try a Demo Account</div>
+                <div style="font-family:Space Mono,monospace;font-size:10px;letter-spacing:2px;
+                            text-transform:uppercase;color:#445566;">No sign up needed</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            if popup == "household":
+                st.markdown("""
+                <div style="font-family:Inter;font-size:13px;color:#8899aa;
+                            margin-bottom:16px;">
+                    🏠 <b style='color:#e8f0f8'>Household Demo</b> — Ram, Mathi & Guna's 3 weeks of
+                    real habit data. Full leaderboard, trends & radar charts.
+                </div>
+                """, unsafe_allow_html=True)
+                c1, c2, c3 = st.columns(3)
+                with c1:
+                    if st.button("▶ Ram", key="demo_ram", use_container_width=True):
+                        with st.spinner("Loading..."):
+                            _do_demo_login("ram@demo.habitos", "household")
+                with c2:
+                    if st.button("▶ Mathi", key="demo_mathi", use_container_width=True):
+                        with st.spinner("Loading..."):
+                            _do_demo_login("mathi@demo.habitos", "household")
+                with c3:
+                    if st.button("▶ Guna", key="demo_guna", use_container_width=True):
+                        with st.spinner("Loading..."):
+                            _do_demo_login("guna@demo.habitos", "household")
+            else:
+                st.markdown("""
+                <div style="font-family:Inter;font-size:13px;color:#8899aa;margin-bottom:16px;">
+                    🧍 <b style='color:#e8f0f8'>Individual Demo</b> — Mathi's personal dashboard.
+                    Habit radar, heatmap, streaks & trend line.
+                </div>
+                """, unsafe_allow_html=True)
+                if st.button("▶ Explore Mathi's Dashboard", key="demo_mathi_ind", use_container_width=True):
+                    with st.spinner("Loading..."):
+                        _do_demo_login("mathi@demo.habitos", "individual")
+
+            if st.button("✕ Close", key="close_popup"):
+                st.session_state.show_demo_popup = None
+                st.rerun()
+
+        st.markdown("<hr style='border-color:#1e2d40;margin:8px 0 24px 0;'>", unsafe_allow_html=True)
+
     # ── Two-column layout: left = branding, right = form ──
     left, gap, right = st.columns([1.1, 0.15, 1.1])
 
@@ -215,40 +276,10 @@ def show_login_page():
         with col_a:
             if st.button("🏠 Household Demo", use_container_width=True, key="demo_hh_btn"):
                 st.session_state.show_demo_popup = "household"
+                st.rerun()
         with col_b:
             if st.button("🧍 Individual Demo", use_container_width=True, key="demo_ind_btn"):
                 st.session_state.show_demo_popup = "individual"
-
-        # ── Demo popup ──
-        popup = st.session_state.get("show_demo_popup")
-        if popup:
-            st.markdown("""
-            <div class="demo-popup">
-                <div style="font-family:Syne;font-weight:800;font-size:15px;
-                            color:#e8f0f8;margin-bottom:12px;">
-                    Try with demo data — no sign up needed
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            if popup == "household":
-                st.info("🏠 **Household Demo** — Ram, Mathi & Guna's 3 weeks of real habit data. Full leaderboard, trends, radar charts.")
-                c1, c2 = st.columns(2)
-                with c1:
-                    if st.button("▶ Enter as Ram", use_container_width=True, key="demo_ram"):
-                        _do_demo_login("ram@demo.habitos", "household")
-                with c2:
-                    if st.button("▶ Enter as Mathi", use_container_width=True, key="demo_mathi"):
-                        _do_demo_login("mathi@demo.habitos", "household")
-                if st.button("▶ Enter as Guna", use_container_width=True, key="demo_guna"):
-                    _do_demo_login("guna@demo.habitos", "household")
-            else:
-                st.info("🧍 **Individual Demo** — Mathi's personal dashboard. Habit radar, heatmap, streaks & trend line.")
-                if st.button("▶ Explore Mathi's Dashboard", use_container_width=True, key="demo_mathi_ind"):
-                    _do_demo_login("mathi@demo.habitos", "individual")
-
-            if st.button("✕ Close", key="close_demo_popup"):
-                st.session_state.show_demo_popup = None
                 st.rerun()
 
         st.markdown("</div>", unsafe_allow_html=True)
