@@ -325,7 +325,7 @@ def show_login_page():
 
 
 def _do_demo_login(email: str, mode: str):
-    """Set all session state atomically then rerun — no partial renders."""
+    """Set all session state atomically, show loading screen, then rerun."""
     result = login_user(email, "demo1234")
     if result["ok"]:
         hh = get_user_household(result["user"]["id"])
@@ -333,7 +333,7 @@ def _do_demo_login(email: str, mode: str):
             "user":            result["user"],
             "household":       hh,
             "mode":            mode,
-            "page":            "app",
+            "page":            "loading",
             "nav":             "🏠 Household Dashboard" if mode == "household" else "🧍 Individual Dashboard",
             "show_demo_popup": None,
         })
