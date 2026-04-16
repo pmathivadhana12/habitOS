@@ -221,6 +221,38 @@ def show_login_page():
                 st.session_state.show_demo_popup = "individual"
                 st.rerun()
 
+        # ── Demo popup — inside left column, below demo buttons ──
+        popup = st.session_state.get("show_demo_popup")
+        if popup:
+            st.markdown("""
+            <div class="demo-popup">
+                <div style="font-family:Syne;font-weight:800;font-size:15px;
+                            color:#e8f0f8;margin-bottom:12px;">
+                    Try with demo data — no sign up needed
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            if popup == "household":
+                st.info("🏠 **Household Demo** — Ram, Mathi & Guna's 3 weeks of real habit data. Full leaderboard, trends, radar charts.")
+                c1, c2 = st.columns(2)
+                with c1:
+                    if st.button("▶ Enter as Ram", use_container_width=True, key="demo_ram"):
+                        _do_demo_login("ram@demo.habitos", "household")
+                with c2:
+                    if st.button("▶ Enter as Mathi", use_container_width=True, key="demo_mathi"):
+                        _do_demo_login("mathi@demo.habitos", "household")
+                if st.button("▶ Enter as Guna", use_container_width=True, key="demo_guna"):
+                    _do_demo_login("guna@demo.habitos", "household")
+            else:
+                st.info("🧍 **Individual Demo** — Mathi's personal dashboard. Habit radar, heatmap, streaks & trend line.")
+                if st.button("▶ Explore Mathi's Dashboard", use_container_width=True, key="demo_mathi_ind"):
+                    _do_demo_login("mathi@demo.habitos", "individual")
+
+            if st.button("✕ Close", key="close_demo_popup"):
+                st.session_state.show_demo_popup = None
+                st.rerun()
+
         st.markdown("</div>", unsafe_allow_html=True)
 
     # ── Vertical divider ────────────────────────────────────────────────────
@@ -289,64 +321,25 @@ def show_login_page():
                     else:
                         st.error(result["error"])
 
-        # ── Demo popup — appears below buttons in left column ──
-        popup = st.session_state.get("show_demo_popup")
-        if popup:
-            st.markdown("""
-            <div class="demo-popup">
-                <div style="font-family:Syne;font-weight:800;font-size:15px;
-                            color:#e8f0f8;margin-bottom:12px;">
-                    Try with demo data — no sign up needed
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            if popup == "household":
-                st.info("🏠 **Household Demo** — Ram, Mathi & Guna's 3 weeks of real habit data. Full leaderboard, trends, radar charts.")
-                c1, c2 = st.columns(2)
-                with c1:
-                    if st.button("▶ Enter as Ram", use_container_width=True, key="demo_ram"):
-                        with st.spinner("Loading..."):
-                            _do_demo_login("ram@demo.habitos", "household")
-                with c2:
-                    if st.button("▶ Enter as Mathi", use_container_width=True, key="demo_mathi"):
-                        with st.spinner("Loading..."):
-                            _do_demo_login("mathi@demo.habitos", "household")
-                if st.button("▶ Enter as Guna", use_container_width=True, key="demo_guna"):
-                    with st.spinner("Loading..."):
-                        _do_demo_login("guna@demo.habitos", "household")
-            else:
-                st.info("🧍 **Individual Demo** — Mathi's personal dashboard. Habit radar, heatmap, streaks & trend line.")
-                if st.button("▶ Explore Mathi's Dashboard", use_container_width=True, key="demo_mathi_ind"):
-                    with st.spinner("Loading..."):
-                        _do_demo_login("mathi@demo.habitos", "individual")
-
-            if st.button("✕ Close", key="close_demo_popup"):
-                st.session_state.show_demo_popup = None
-                st.rerun()
-
         st.markdown("</div>", unsafe_allow_html=True)
 
 
 def _do_demo_login(email: str, mode: str):
-    """Helper: log in as demo user and route to app. Sets all state atomically."""
-    with st.spinner("Loading demo..."):
-        result = login_user(email, "demo1234")
-        if result["ok"]:
-            hh = get_user_household(result["user"]["id"])
-            # Set ALL session state at once before rerun to avoid partial renders
-            st.session_state.update({
-                "user": result["user"],
-                "household": hh,
-                "mode": mode,
-                "page": "app",
-                "nav": "🏠 Household Dashboard" if mode == "household" else "🧍 Individual Dashboard",
-                "show_demo_popup": None,
-            })
-        else:
-            st.error("Demo login failed. Please refresh and try again.")
-            return
-    st.rerun()
+    """Set all session state atomically then rerun — no partial renders."""
+    result = login_user(email, "demo1234")
+    if result["ok"]:
+        hh = get_user_household(result["user"]["id"])
+        st.session_state.update({
+            "user":            result["user"],
+            "household":       hh,
+            "mode":            mode,
+            "page":            "app",
+            "nav":             "🏠 Household Dashboard" if mode == "household" else "🧍 Individual Dashboard",
+            "show_demo_popup": None,
+        })
+        st.rerun()
+    else:
+        st.error("Demo login failed — please refresh and try again.")
 
 
 def show_onboarding_page():
