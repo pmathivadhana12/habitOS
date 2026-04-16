@@ -315,37 +315,29 @@ def get_streak(user_id: int, habit_id: int) -> int:
             break
     return count
 
-# ── Demo seed from house_1.csv ────────────────────────────────────────────────
+# ── Demo seed — hardcoded so it works on cloud without CSV ───────────────────
 
-DEMO_HABIT_ICONS = {"gym": "🏋️", "water": "💧", "sleep": "🌙", "vitamins": "💊"}
-DEMO_HABIT_UNITS = {"gym": "mins", "water": "liters", "sleep": "hours", "vitamins": "times"}
-DEMO_HABIT_TARGETS = {"gym": 30.0, "water": 2.5, "sleep": 7.0, "vitamins": 1.0}
-DEMO_HABIT_TYPES = {"gym": "duration", "water": "quantity", "sleep": "duration", "vitamins": "binary"}
+DEMO_HABIT_ICONS    = {"gym": "🏋️", "water": "💧", "sleep": "🌙", "vitamins": "💊"}
+DEMO_HABIT_UNITS    = {"gym": "mins", "water": "liters", "sleep": "hours", "vitamins": "times"}
+DEMO_HABIT_TARGETS  = {"gym": 30.0, "water": 2.5, "sleep": 7.0, "vitamins": 1.0}
+DEMO_HABIT_TYPES    = {"gym": "duration", "water": "quantity", "sleep": "duration", "vitamins": "binary"}
+
+DEMO_LOGS = [['Ram', 'vitamins', '2026-04-01', 0, 0.0], ['Ram', 'gym', '2026-04-01', 1, 60.0], ['Ram', 'water', '2026-04-01', 1, 2.7], ['Ram', 'sleep', '2026-04-01', 0, 6.0], ['Mathi', 'vitamins', '2026-04-01', 1, 1.0], ['Mathi', 'gym', '2026-04-01', 1, 30.0], ['Mathi', 'water', '2026-04-01', 0, 2.3], ['Mathi', 'sleep', '2026-04-01', 0, 6.0], ['Guna', 'vitamins', '2026-04-01', 0, 0.0], ['Guna', 'gym', '2026-04-01', 0, 0.0], ['Guna', 'water', '2026-04-01', 0, 1.8], ['Guna', 'sleep', '2026-04-01', 0, 5.0], ['Ram', 'vitamins', '2026-04-02', 1, 1.0], ['Ram', 'gym', '2026-04-02', 1, 40.0], ['Ram', 'water', '2026-04-02', 1, 2.8], ['Ram', 'sleep', '2026-04-02', 0, 6.0], ['Mathi', 'vitamins', '2026-04-02', 1, 1.0], ['Mathi', 'gym', '2026-04-02', 1, 40.0], ['Mathi', 'water', '2026-04-02', 1, 2.6], ['Mathi', 'sleep', '2026-04-02', 1, 8.0], ['Guna', 'vitamins', '2026-04-02', 0, 0.0], ['Guna', 'gym', '2026-04-02', 0, 0.0], ['Guna', 'water', '2026-04-02', 0, 1.3], ['Guna', 'sleep', '2026-04-02', 0, 6.0], ['Ram', 'vitamins', '2026-04-03', 1, 1.0], ['Ram', 'gym', '2026-04-03', 1, 40.0], ['Ram', 'water', '2026-04-03', 1, 2.9], ['Ram', 'sleep', '2026-04-03', 1, 8.0], ['Mathi', 'vitamins', '2026-04-03', 1, 1.0], ['Mathi', 'gym', '2026-04-03', 1, 35.0], ['Mathi', 'water', '2026-04-03', 0, 2.1], ['Mathi', 'sleep', '2026-04-03', 1, 7.0], ['Guna', 'vitamins', '2026-04-03', 0, 0.0], ['Guna', 'gym', '2026-04-03', 0, 20.0], ['Guna', 'water', '2026-04-03', 0, 1.1], ['Guna', 'sleep', '2026-04-03', 0, 5.0], ['Ram', 'vitamins', '2026-04-04', 1, 1.0], ['Ram', 'gym', '2026-04-04', 1, 40.0], ['Ram', 'water', '2026-04-04', 1, 2.8], ['Ram', 'sleep', '2026-04-04', 1, 8.0], ['Mathi', 'vitamins', '2026-04-04', 1, 1.0], ['Mathi', 'gym', '2026-04-04', 1, 30.0], ['Mathi', 'water', '2026-04-04', 1, 2.5], ['Mathi', 'sleep', '2026-04-04', 1, 8.0], ['Guna', 'vitamins', '2026-04-04', 0, 0.0], ['Guna', 'gym', '2026-04-04', 0, 0.0], ['Guna', 'water', '2026-04-04', 0, 1.8], ['Guna', 'sleep', '2026-04-04', 0, 6.0], ['Ram', 'vitamins', '2026-04-05', 0, 0.0], ['Ram', 'gym', '2026-04-05', 1, 60.0], ['Ram', 'water', '2026-04-05', 1, 2.6], ['Ram', 'sleep', '2026-04-05', 1, 8.0], ['Mathi', 'vitamins', '2026-04-05', 0, 0.0], ['Mathi', 'gym', '2026-04-05', 1, 40.0], ['Mathi', 'water', '2026-04-05', 0, 2.4], ['Mathi', 'sleep', '2026-04-05', 0, 6.0], ['Guna', 'vitamins', '2026-04-05', 0, 0.0], ['Guna', 'gym', '2026-04-05', 0, 0.0], ['Guna', 'water', '2026-04-05', 0, 2.1], ['Guna', 'sleep', '2026-04-05', 0, 3.0], ['Ram', 'vitamins', '2026-04-06', 1, 1.0], ['Ram', 'gym', '2026-04-06', 1, 45.0], ['Ram', 'water', '2026-04-06', 0, 2.1], ['Ram', 'sleep', '2026-04-06', 1, 7.0], ['Mathi', 'vitamins', '2026-04-06', 1, 1.0], ['Mathi', 'gym', '2026-04-06', 1, 30.0], ['Mathi', 'water', '2026-04-06', 0, 2.1], ['Mathi', 'sleep', '2026-04-06', 0, 6.0], ['Guna', 'vitamins', '2026-04-06', 1, 1.0], ['Guna', 'gym', '2026-04-06', 0, 20.0], ['Guna', 'water', '2026-04-06', 0, 1.7], ['Guna', 'sleep', '2026-04-06', 0, 6.0], ['Ram', 'vitamins', '2026-04-07', 0, 0.0], ['Ram', 'gym', '2026-04-07', 1, 60.0], ['Ram', 'water', '2026-04-07', 0, 2.3], ['Ram', 'sleep', '2026-04-07', 1, 8.0], ['Mathi', 'vitamins', '2026-04-07', 1, 1.0], ['Mathi', 'gym', '2026-04-07', 1, 35.0], ['Mathi', 'water', '2026-04-07', 1, 2.6], ['Mathi', 'sleep', '2026-04-07', 1, 8.0], ['Guna', 'vitamins', '2026-04-07', 0, 0.0], ['Guna', 'gym', '2026-04-07', 1, 30.0], ['Guna', 'water', '2026-04-07', 0, 1.4], ['Guna', 'sleep', '2026-04-07', 0, 5.0], ['Ram', 'vitamins', '2026-04-08', 1, 1.0], ['Ram', 'gym', '2026-04-08', 1, 40.0], ['Ram', 'water', '2026-04-08', 1, 2.9], ['Ram', 'sleep', '2026-04-08', 1, 7.0], ['Mathi', 'vitamins', '2026-04-08', 1, 1.0], ['Mathi', 'gym', '2026-04-08', 1, 30.0], ['Mathi', 'water', '2026-04-08', 0, 2.2], ['Mathi', 'sleep', '2026-04-08', 1, 8.0], ['Guna', 'vitamins', '2026-04-08', 0, 0.0], ['Guna', 'gym', '2026-04-08', 0, 0.0], ['Guna', 'water', '2026-04-08', 0, 2.1], ['Guna', 'sleep', '2026-04-08', 0, 4.0], ['Ram', 'vitamins', '2026-04-09', 1, 1.0], ['Ram', 'gym', '2026-04-09', 1, 50.0], ['Ram', 'water', '2026-04-09', 0, 2.2], ['Ram', 'sleep', '2026-04-09', 1, 7.0], ['Mathi', 'vitamins', '2026-04-09', 1, 1.0], ['Mathi', 'gym', '2026-04-09', 1, 40.0], ['Mathi', 'water', '2026-04-09', 1, 2.7], ['Mathi', 'sleep', '2026-04-09', 0, 6.0], ['Guna', 'vitamins', '2026-04-09', 1, 1.0], ['Guna', 'gym', '2026-04-09', 0, 0.0], ['Guna', 'water', '2026-04-09', 0, 2.1], ['Guna', 'sleep', '2026-04-09', 0, 4.0], ['Ram', 'vitamins', '2026-04-10', 0, 0.0], ['Ram', 'gym', '2026-04-10', 1, 40.0], ['Ram', 'water', '2026-04-10', 0, 2.3], ['Ram', 'sleep', '2026-04-10', 1, 8.0], ['Mathi', 'vitamins', '2026-04-10', 1, 1.0], ['Mathi', 'gym', '2026-04-10', 1, 30.0], ['Mathi', 'water', '2026-04-10', 0, 2.0], ['Mathi', 'sleep', '2026-04-10', 1, 8.0], ['Guna', 'vitamins', '2026-04-10', 0, 0.0], ['Guna', 'gym', '2026-04-10', 0, 0.0], ['Guna', 'water', '2026-04-10', 0, 1.2], ['Guna', 'sleep', '2026-04-10', 0, 6.0], ['Ram', 'vitamins', '2026-04-11', 1, 1.0], ['Ram', 'gym', '2026-04-11', 1, 45.0], ['Ram', 'water', '2026-04-11', 0, 2.3], ['Ram', 'sleep', '2026-04-11', 1, 8.0], ['Mathi', 'vitamins', '2026-04-11', 1, 1.0], ['Mathi', 'gym', '2026-04-11', 1, 35.0], ['Mathi', 'water', '2026-04-11', 0, 2.4], ['Mathi', 'sleep', '2026-04-11', 1, 7.0], ['Guna', 'vitamins', '2026-04-11', 1, 1.0], ['Guna', 'gym', '2026-04-11', 0, 0.0], ['Guna', 'water', '2026-04-11', 0, 2.2], ['Guna', 'sleep', '2026-04-11', 0, 5.0], ['Ram', 'vitamins', '2026-04-12', 1, 1.0], ['Ram', 'gym', '2026-04-12', 1, 60.0], ['Ram', 'water', '2026-04-12', 0, 2.4], ['Ram', 'sleep', '2026-04-12', 0, 6.0], ['Mathi', 'vitamins', '2026-04-12', 0, 0.0], ['Mathi', 'gym', '2026-04-12', 1, 40.0], ['Mathi', 'water', '2026-04-12', 1, 2.5], ['Mathi', 'sleep', '2026-04-12', 1, 7.0], ['Guna', 'vitamins', '2026-04-12', 0, 0.0], ['Guna', 'gym', '2026-04-12', 0, 0.0], ['Guna', 'water', '2026-04-12', 0, 1.7], ['Guna', 'sleep', '2026-04-12', 0, 4.0], ['Ram', 'vitamins', '2026-04-13', 1, 1.0], ['Ram', 'gym', '2026-04-13', 1, 50.0], ['Ram', 'water', '2026-04-13', 1, 2.6], ['Ram', 'sleep', '2026-04-13', 1, 7.0], ['Mathi', 'vitamins', '2026-04-13', 1, 1.0], ['Mathi', 'gym', '2026-04-13', 1, 35.0], ['Mathi', 'water', '2026-04-13', 1, 2.7], ['Mathi', 'sleep', '2026-04-13', 1, 7.0], ['Guna', 'vitamins', '2026-04-13', 0, 0.0], ['Guna', 'gym', '2026-04-13', 0, 20.0], ['Guna', 'water', '2026-04-13', 0, 1.3], ['Guna', 'sleep', '2026-04-13', 0, 5.0], ['Ram', 'vitamins', '2026-04-14', 1, 1.0], ['Ram', 'gym', '2026-04-14', 1, 60.0], ['Ram', 'water', '2026-04-14', 1, 2.6], ['Ram', 'sleep', '2026-04-14', 1, 8.0], ['Mathi', 'vitamins', '2026-04-14', 0, 0.0], ['Mathi', 'gym', '2026-04-14', 1, 40.0], ['Mathi', 'water', '2026-04-14', 0, 2.4], ['Mathi', 'sleep', '2026-04-14', 0, 6.0], ['Guna', 'vitamins', '2026-04-14', 0, 0.0], ['Guna', 'gym', '2026-04-14', 1, 30.0], ['Guna', 'water', '2026-04-14', 0, 2.1], ['Guna', 'sleep', '2026-04-14', 0, 4.0], ['Ram', 'vitamins', '2026-04-15', 1, 1.0], ['Ram', 'gym', '2026-04-15', 1, 40.0], ['Ram', 'water', '2026-04-15', 0, 2.2], ['Ram', 'sleep', '2026-04-15', 1, 7.0], ['Mathi', 'vitamins', '2026-04-15', 1, 1.0], ['Mathi', 'gym', '2026-04-15', 1, 35.0], ['Mathi', 'water', '2026-04-15', 0, 2.1], ['Mathi', 'sleep', '2026-04-15', 1, 7.0], ['Guna', 'vitamins', '2026-04-15', 0, 0.0], ['Guna', 'gym', '2026-04-15', 0, 0.0], ['Guna', 'water', '2026-04-15', 0, 1.3], ['Guna', 'sleep', '2026-04-15', 0, 4.0], ['Ram', 'vitamins', '2026-04-16', 1, 1.0], ['Ram', 'gym', '2026-04-16', 1, 45.0], ['Ram', 'water', '2026-04-16', 1, 3.0], ['Ram', 'sleep', '2026-04-16', 1, 8.0], ['Mathi', 'vitamins', '2026-04-16', 0, 0.0], ['Mathi', 'gym', '2026-04-16', 0, 0.0], ['Mathi', 'water', '2026-04-16', 0, 2.4], ['Mathi', 'sleep', '2026-04-16', 1, 8.0], ['Guna', 'vitamins', '2026-04-16', 1, 1.0], ['Guna', 'gym', '2026-04-16', 0, 0.0], ['Guna', 'water', '2026-04-16', 0, 1.4], ['Guna', 'sleep', '2026-04-16', 0, 3.0], ['Ram', 'vitamins', '2026-04-17', 1, 1.0], ['Ram', 'gym', '2026-04-17', 1, 45.0], ['Ram', 'water', '2026-04-17', 1, 2.9], ['Ram', 'sleep', '2026-04-17', 1, 8.0], ['Mathi', 'vitamins', '2026-04-17', 1, 1.0], ['Mathi', 'gym', '2026-04-17', 1, 35.0], ['Mathi', 'water', '2026-04-17', 0, 2.2], ['Mathi', 'sleep', '2026-04-17', 1, 7.0], ['Guna', 'vitamins', '2026-04-17', 1, 1.0], ['Guna', 'gym', '2026-04-17', 0, 20.0], ['Guna', 'water', '2026-04-17', 0, 1.4], ['Guna', 'sleep', '2026-04-17', 0, 4.0], ['Ram', 'vitamins', '2026-04-18', 0, 0.0], ['Ram', 'gym', '2026-04-18', 1, 60.0], ['Ram', 'water', '2026-04-18', 0, 2.2], ['Ram', 'sleep', '2026-04-18', 1, 8.0], ['Mathi', 'vitamins', '2026-04-18', 0, 0.0], ['Mathi', 'gym', '2026-04-18', 1, 35.0], ['Mathi', 'water', '2026-04-18', 0, 2.1], ['Mathi', 'sleep', '2026-04-18', 1, 7.0], ['Guna', 'vitamins', '2026-04-18', 1, 1.0], ['Guna', 'gym', '2026-04-18', 0, 0.0], ['Guna', 'water', '2026-04-18', 0, 2.0], ['Guna', 'sleep', '2026-04-18', 0, 5.0], ['Ram', 'vitamins', '2026-04-19', 1, 1.0], ['Ram', 'gym', '2026-04-19', 1, 40.0], ['Ram', 'water', '2026-04-19', 1, 2.8], ['Ram', 'sleep', '2026-04-19', 1, 8.0], ['Mathi', 'vitamins', '2026-04-19', 1, 1.0], ['Mathi', 'gym', '2026-04-19', 1, 40.0], ['Mathi', 'water', '2026-04-19', 1, 2.6], ['Mathi', 'sleep', '2026-04-19', 1, 7.0], ['Guna', 'vitamins', '2026-04-19', 1, 1.0], ['Guna', 'gym', '2026-04-19', 0, 0.0], ['Guna', 'water', '2026-04-19', 0, 1.0], ['Guna', 'sleep', '2026-04-19', 0, 3.0], ['Ram', 'vitamins', '2026-04-20', 1, 1.0], ['Ram', 'gym', '2026-04-20', 1, 60.0], ['Ram', 'water', '2026-04-20', 1, 2.8], ['Ram', 'sleep', '2026-04-20', 1, 7.0], ['Mathi', 'vitamins', '2026-04-20', 1, 1.0], ['Mathi', 'gym', '2026-04-20', 1, 30.0], ['Mathi', 'water', '2026-04-20', 1, 2.5], ['Mathi', 'sleep', '2026-04-20', 1, 7.0], ['Guna', 'vitamins', '2026-04-20', 0, 0.0], ['Guna', 'gym', '2026-04-20', 1, 30.0], ['Guna', 'water', '2026-04-20', 0, 2.1], ['Guna', 'sleep', '2026-04-20', 0, 4.0], ['Ram', 'vitamins', '2026-04-21', 0, 0.0], ['Ram', 'gym', '2026-04-21', 1, 40.0], ['Ram', 'water', '2026-04-21', 1, 2.5], ['Ram', 'sleep', '2026-04-21', 0, 6.0], ['Mathi', 'vitamins', '2026-04-21', 1, 1.0], ['Mathi', 'gym', '2026-04-21', 1, 35.0], ['Mathi', 'water', '2026-04-21', 0, 2.2], ['Mathi', 'sleep', '2026-04-21', 0, 6.0], ['Guna', 'vitamins', '2026-04-21', 1, 1.0], ['Guna', 'gym', '2026-04-21', 0, 0.0], ['Guna', 'water', '2026-04-21', 0, 1.6], ['Guna', 'sleep', '2026-04-21', 0, 5.0]]
 
 
 def seed_demo_data(csv_path: str = "house_1.csv"):
     """
-    Load house_1.csv into the DB as a demo household (Ram, Mathi, Guna).
-    Safe to call multiple times — skips if demo already loaded.
+    Seed demo household (Ram, Mathi, Guna) into the DB.
+    Uses hardcoded data — works on cloud without CSV file.
+    Safe to call multiple times — skips if already seeded.
     """
-    import pandas as pd
-    import os
-
-    if not os.path.exists(csv_path):
-        return  # No CSV, skip silently
-
     conn = get_conn()
-
-    # Check if demo already seeded
-    existing = conn.execute(
-        "SELECT id FROM users WHERE email='ram@demo.habitos'"
-    ).fetchone()
-    if existing:
-        conn.close()
-        return  # Already done
-
     try:
-        df = pd.read_csv(csv_path, parse_dates=["date"])
+        existing = conn.execute(
+            "SELECT id FROM users WHERE email='ram@demo.habitos'"
+        ).fetchone()
+        if existing:
+            return  # Already seeded
 
         demo_password = hash_password("demo1234")
         demo_members = {
@@ -366,15 +358,14 @@ def seed_demo_data(csv_path: str = "house_1.csv"):
             ).fetchone()["id"]
             user_ids[name] = uid
 
-        # Create demo household (owner = Ram)
+        # Create demo household
         conn.execute(
             "INSERT OR IGNORE INTO households (name, invite_code, owner_id) VALUES (?,?,?)",
             ("Demo House 🏠", "DEMO0001", user_ids["Ram"])
         )
-        hh = conn.execute(
+        hh_id = conn.execute(
             "SELECT id FROM households WHERE invite_code='DEMO0001'"
-        ).fetchone()
-        hh_id = hh["id"]
+        ).fetchone()["id"]
 
         # Add all 3 as members
         for uid in user_ids.values():
@@ -384,7 +375,7 @@ def seed_demo_data(csv_path: str = "house_1.csv"):
             )
 
         # Create habits per user
-        habit_ids = {}  # (user_name, habit_name) -> habit_id
+        habit_ids = {}
         for name, uid in user_ids.items():
             for habit in ["gym", "water", "sleep", "vitamins"]:
                 conn.execute("""
@@ -403,25 +394,18 @@ def seed_demo_data(csv_path: str = "house_1.csv"):
                 ).fetchone()["id"]
                 habit_ids[(name, habit)] = hid
 
-        # Insert all log rows
-        for _, row in df.iterrows():
-            uname = row["user_name"]
-            habit = row["habit"]
+        # Insert all log rows from hardcoded data
+        for uname, habit, log_date, status, value in DEMO_LOGS:
             if uname not in user_ids or (uname, habit) not in habit_ids:
                 continue
-            uid = user_ids[uname]
-            hid = habit_ids[(uname, habit)]
-            log_date = str(row["date"].date())
-            status = int(row["status"])
-            value = float(row["value"]) if "value" in row else 0.0
             conn.execute("""
                 INSERT OR IGNORE INTO logs
                 (user_id, habit_id, log_date, status, value)
                 VALUES (?,?,?,?,?)
-            """, (uid, hid, log_date, status, value))
+            """, (user_ids[uname], habit_ids[(uname, habit)], log_date, status, value))
 
         conn.commit()
-        print("✅ Demo data seeded from house_1.csv")
+        print("Demo data seeded successfully")
 
     except Exception as e:
         print(f"Demo seed error: {e}")
@@ -430,7 +414,6 @@ def seed_demo_data(csv_path: str = "house_1.csv"):
 
 
 def get_demo_credentials() -> list:
-    """Return demo login hints for the login page."""
     return [
         {"name": "Ram",   "email": "ram@demo.habitos",   "password": "demo1234"},
         {"name": "Mathi", "email": "mathi@demo.habitos", "password": "demo1234"},
