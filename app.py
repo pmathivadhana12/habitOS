@@ -462,22 +462,47 @@ def settings_page():
 
 
 def main():
-    if "page" not in st.session_state: st.session_state.page="login"
-    page=st.session_state.page
-    if page=="login": show_login_page(); return
-    if page=="onboarding": show_onboarding_page(); return
-    if page=="show_invite": show_invite_page(); return
-    if page=="onboard_check": check_onboard_or_app(); return
+    if "page" not in st.session_state:
+        st.session_state.page = "login"
 
-    user=st.session_state.get("user")
-    if not user: st.session_state.page="login"; st.rerun(); return
+    page = st.session_state.page
+
+    # ── Auth pages — render nothing else until fully resolved ──
+    if page == "login":
+        show_login_page()
+        return
+    if page == "onboarding":
+        show_onboarding_page()
+        return
+    if page == "show_invite":
+        show_invite_page()
+        return
+    if page == "onboard_check":
+        check_onboard_or_app()
+        return
+
+    # ── Guard: must have a user in session ──
+    user = st.session_state.get("user")
+    if not user:
+        st.session_state.page = "login"
+        st.rerun()
+        return
+
+    # ── Pre-set nav from session if coming from demo login ──
+    if "nav" not in st.session_state:
+        st.session_state.nav = "🧍 Individual Dashboard"
 
     with st.sidebar:
         st.markdown("<div style='padding:20px 0 8px 0;'><div style='font-family:Syne,sans-serif;font-weight:800;font-size:22px;color:#e8f0f8;'>⬡ HabitOS</div><div style='font-family:Space Mono;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#445566;margin-top:2px;'>Health Analytics v2.0</div></div>",unsafe_allow_html=True)
         st.markdown("<hr style='border-color:#1e2d40;margin:12px 0;'>",unsafe_allow_html=True)
         st.markdown("<div style='font-family:Space Mono;font-size:10px;color:#445566;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;'>SIGNED IN AS</div><div style='font-family:Syne;font-weight:700;font-size:14px;color:#00d4ff;'>"+user["name"]+"</div>",unsafe_allow_html=True)
         st.markdown("<hr style='border-color:#1e2d40;margin:12px 0;'>",unsafe_allow_html=True)
-        nav=st.radio("",["🧍 Individual Dashboard","🏠 Household Dashboard","📝 Log Habits","⚙ Manage Habits","🔧 Settings"],label_visibility="collapsed",key="nav")
+        nav_options = ["🧍 Individual Dashboard","🏠 Household Dashboard","📝 Log Habits","⚙ Manage Habits","🔧 Settings"]
+        # Use index to pre-select correct page (e.g. from demo login)
+        current_nav = st.session_state.get("nav", nav_options[0])
+        nav_index = nav_options.index(current_nav) if current_nav in nav_options else 0
+        nav = st.radio("", nav_options, index=nav_index,
+                       label_visibility="collapsed", key="nav")
         st.markdown("<hr style='border-color:#1e2d40;margin:16px 0;'>",unsafe_allow_html=True)
         habits=get_habits(user["id"])
         logs=get_logs(user["id"],days=7)
@@ -509,4 +534,3 @@ def main():
 
 if __name__=="__main__":
     main()
-    
